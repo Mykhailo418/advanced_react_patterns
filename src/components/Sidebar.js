@@ -25,11 +25,22 @@ const Sidebar = ({patterns}) => {
   );
 
   function outputNavLinks(patterns, activeId) {
-    return patterns.map(({id, title}) => <Navlink key={id} id={id} title={title} active={activeId === id} setActive={setActive} />);
+    return patterns.map(({id, title}) =>
+      <Navlink key={id}
+               id={id}
+               title={title}
+               active={activeId === id}
+               setActive={setActive} />);
   }
 
   function outputTabs(patterns, activeId) {
-    return patterns.map(({id, title}) => <Tab key={id} id={id} title={title} active={activeId === id} setActive={setActive} />);
+    return patterns.map(({id, title, component}) =>
+      <Tab key={id}
+           id={id}
+           title={title}
+           active={activeId === id}
+           setActive={setActive}
+           pattern={component} />);
   }
 }
 
