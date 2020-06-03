@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import MediumClap from './patterns/medium_clap/MediumClap'
+import MediumClapWithHooks from './patterns/medium_clap_hooks/MediumClap'
 
 const App = () => {
   const patterns = [
@@ -10,9 +11,9 @@ const App = () => {
       component: MediumClap
     },
     {
-      id: 'clap2',
-      title: 'Medium Clap2',
-      component: MediumClap
+      id: 'clap_with_hooks',
+      title: 'Medium Clap With Hooks',
+      component: MediumClapWithHooks
     }
   ];
 
