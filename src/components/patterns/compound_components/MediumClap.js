@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, createContext, useMemo } from 'react';
 import ClapIcon from './ClapIcon';
 import ClapCount from './ClapCount';
 import CountTotal from './CountTotal';
@@ -10,12 +10,12 @@ const initState = {
   isClicked: false
 };
 const MAX_CLAP_COUNT = 50;
+export const MediumClapContext = createContext();
 
-const MediumClapWithHooks = () => {
+const MediumClapCompound = ({children}) => {
   const [clapState, setClapState] = useState(initState);
   const [refs, setRefState] = useState({});
   const animateTimeLine = useClapAnimation(refs);
-  const {count, countTotal, isClicked} = clapState;
 
   const setRef = useCallback(node => {
     setRefState(prevrefState => ({
@@ -23,6 +23,8 @@ const MediumClapWithHooks = () => {
       [node.dataset.refkey]: node
     }) );
   }, []);
+
+  const memoizedValue = useMemo(() => ({...clapState, setRef}), [clapState, setRef]);
 
   const handleClick = e => {
     animateTimeLine.replay();
@@ -35,14 +37,22 @@ const MediumClapWithHooks = () => {
       isClicked: true
     }) );
   };
-  
+
   return (
-    <button ref={setRef} data-refkey="clapBtn" className="clap" onClick={handleClick}>
-      <ClapIcon isClicked={isClicked} />
-      <ClapCount count={count} setRef={setRef} />
-      <CountTotal countTotal={countTotal} setRef={setRef} />
-    </button>
+    <MediumClapContext.Provider value={memoizedValue}>
+      <button ref={setRef} data-refkey="clapBtn" className="clap" onClick={handleClick}>
+        {children}
+      </button>
+    </MediumClapContext.Provider>
   );
 }
 
-export default MediumClapWithHooks;
+const Usage = () => {
+  return <MediumClapCompound>
+    <ClapIcon />
+    <ClapCount />
+    <CountTotal />
+  </MediumClapCompound>;
+}
+
+export default Usage;
