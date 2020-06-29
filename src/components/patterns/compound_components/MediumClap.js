@@ -1,4 +1,4 @@
-import React, { useState, useCallback, createContext, useMemo } from 'react';
+import React, { useState, useCallback, createContext, useMemo , useEffect, useRef} from 'react';
 import ClapIcon from './ClapIcon';
 import ClapCount from './ClapCount';
 import CountTotal from './CountTotal';
@@ -12,10 +12,12 @@ const initState = {
 const MAX_CLAP_COUNT = 50;
 export const MediumClapContext = createContext();
 
-const MediumClapCompound = ({children}) => {
+const MediumClapCompound = ({children, onClap}) => {
   const [clapState, setClapState] = useState(initState);
   const [refs, setRefState] = useState({});
   const animateTimeLine = useClapAnimation(refs);
+  const {count} = clapState;
+  const componentMounted = useRef(true);
 
   const setRef = useCallback(node => {
     setRefState(prevrefState => ({
@@ -25,6 +27,14 @@ const MediumClapCompound = ({children}) => {
   }, []);
 
   const memoizedValue = useMemo(() => ({...clapState, setRef}), [clapState, setRef]);
+
+  useEffect(() => {
+    if (!componentMounted.current) {
+      console.log('useEffect invoked ', count)
+      onClap && onClap(clapState)
+    }
+    componentMounted.current = false;
+  }, [count]);
 
   const handleClick = e => {
     animateTimeLine.replay();
@@ -47,12 +57,26 @@ const MediumClapCompound = ({children}) => {
   );
 }
 
+MediumClapCompound.Icon = ClapIcon;
+MediumClapCompound.Count = ClapCount;
+MediumClapCompound.Total = CountTotal;
+
 const Usage = () => {
-  return <MediumClapCompound>
-    <ClapIcon />
-    <ClapCount />
-    <CountTotal />
-  </MediumClapCompound>;
+  const [count, setCount] = useState(0);
+  const handleClap = clapState => {
+    setCount(clapState.count);
+  }
+
+  return (
+    <div style={{width: '100%'}}>
+      <MediumClapCompound onClap={handleClap}>
+        <MediumClapCompound.Icon />
+        <MediumClapCompound.Count />
+        <MediumClapCompound.Total />
+      </MediumClapCompound>
+      {!!count && <p>You have clapped {count}</p>}
+    </div>
+  );
 }
 
 export default Usage;
