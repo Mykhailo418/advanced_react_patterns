@@ -12,7 +12,7 @@ const initState = {
 const MAX_CLAP_COUNT = 50;
 export const MediumClapContext = createContext();
 
-const MediumClapCompound = ({children, onClap}) => {
+const MediumClapCompound = ({children, onClap, style: customStyle = {}}) => {
   const [clapState, setClapState] = useState(initState);
   const [refs, setRefState] = useState({});
   const animateTimeLine = useClapAnimation(refs);
@@ -50,7 +50,7 @@ const MediumClapCompound = ({children, onClap}) => {
 
   return (
     <MediumClapContext.Provider value={memoizedValue}>
-      <button ref={setRef} data-refkey="clapBtn" className="clap" onClick={handleClick}>
+      <button ref={setRef} data-refkey="clapBtn" className="clap" onClick={handleClick} style={customStyle}>
         {children}
       </button>
     </MediumClapContext.Provider>
@@ -69,10 +69,10 @@ const Usage = () => {
 
   return (
     <div style={{width: '100%'}}>
-      <MediumClapCompound onClap={handleClap}>
-        <MediumClapCompound.Icon />
-        <MediumClapCompound.Count />
-        <MediumClapCompound.Total />
+      <MediumClapCompound onClap={handleClap} style={{border: '1px solid red'}}>
+        <MediumClapCompound.Icon style={{color: 'red'}} />
+        <MediumClapCompound.Count style={{color: 'red'}} />
+        <MediumClapCompound.Total style={{color: 'red'}} />
       </MediumClapCompound>
       {!!count && <p>You have clapped {count}</p>}
     </div>
