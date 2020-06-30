@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { MediumClapContext } from './MediumClap';
 
-const CountTotal = ({style: customStyle = {}}) => {
+const CountTotal = ({style: customStyle = {}, className}) => {
   const {countTotal, setRef} = useContext(MediumClapContext);
+  const classNames = ["total", className].join(' ').trim();
   return (
-    <span className="total" ref={setRef} data-refkey="clapCountTotal" style={customStyle}>
+    <span className={classNames} ref={setRef} data-refkey="clapCountTotal" style={customStyle}>
       {countTotal}
     </span>
   );

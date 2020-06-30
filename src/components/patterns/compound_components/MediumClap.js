@@ -3,6 +3,7 @@ import ClapIcon from './ClapIcon';
 import ClapCount from './ClapCount';
 import CountTotal from './CountTotal';
 import useClapAnimation from './custom_hooks/useClapAnimation';
+import userCustomStyles from './Custom.module.css';
 
 const initState = {
   count: 0,
@@ -12,7 +13,7 @@ const initState = {
 const MAX_CLAP_COUNT = 50;
 export const MediumClapContext = createContext();
 
-const MediumClapCompound = ({children, onClap, style: customStyle = {}}) => {
+const MediumClapCompound = ({children, onClap, style: customStyle = {}, className}) => {
   const [clapState, setClapState] = useState(initState);
   const [refs, setRefState] = useState({});
   const animateTimeLine = useClapAnimation(refs);
@@ -48,9 +49,11 @@ const MediumClapCompound = ({children, onClap, style: customStyle = {}}) => {
     }) );
   };
 
+  const classNames = ["clap", className].join(' ').trim();
+
   return (
     <MediumClapContext.Provider value={memoizedValue}>
-      <button ref={setRef} data-refkey="clapBtn" className="clap" onClick={handleClick} style={customStyle}>
+      <button ref={setRef} data-refkey="clapBtn" className={classNames} onClick={handleClick} style={customStyle}>
         {children}
       </button>
     </MediumClapContext.Provider>
@@ -69,10 +72,10 @@ const Usage = () => {
 
   return (
     <div style={{width: '100%'}}>
-      <MediumClapCompound onClap={handleClap} style={{border: '1px solid red'}}>
-        <MediumClapCompound.Icon style={{color: 'red'}} />
-        <MediumClapCompound.Count style={{color: 'red'}} />
-        <MediumClapCompound.Total style={{color: 'red'}} />
+      <MediumClapCompound onClap={handleClap} style={{background: 'yellow'}} className={userCustomStyles.customClap} >
+        <MediumClapCompound.Icon className={userCustomStyles.customIcon} />
+        <MediumClapCompound.Count className={userCustomStyles.customCount} />
+        <MediumClapCompound.Total className={userCustomStyles.customTotal} />
       </MediumClapCompound>
       {!!count && <p>You have clapped {count}</p>}
     </div>
