@@ -4,6 +4,7 @@ import MediumClap from './patterns/medium_clap/MediumClap';
 import MediumClapWithHooks from './patterns/medium_clap_hooks/MediumClap';
 import MediumClapCompound from './patterns/compound_components/MediumClap';
 import MediumClapControlProps from './patterns/control_props/MediumClap';
+import MediumClapCustomHooks from './patterns/custom_hooks_pattern/MediumClap';
 
 const App = () => {
   const patterns = [
@@ -26,6 +27,11 @@ const App = () => {
       id: 'control_props',
       title: 'Control Props',
       component: MediumClapControlProps
+    },
+    {
+      id: 'custom_hooks',
+      title: 'Custom Hooks',
+      component: MediumClapCustomHooks
     }
   ];
 
