@@ -6,6 +6,7 @@ import MediumClapCompound from './patterns/compound_components/MediumClap';
 import MediumClapControlProps from './patterns/control_props/MediumClap';
 import MediumClapCustomHooks from './patterns/custom_hooks_pattern/MediumClap';
 import MediumClapPropsCollection from './patterns/props_collection/MediumClap';
+import MediumClapPropsGetter from './patterns/props_getter/MediumClap';
 
 const App = () => {
   const patterns = [
@@ -38,6 +39,11 @@ const App = () => {
       id: 'props_collection',
       title: 'Props Collection',
       component: MediumClapPropsCollection
+    },
+    {
+      id: 'props_getter',
+      title: 'Props Getter',
+      component: MediumClapPropsGetter
     }
   ];
 
