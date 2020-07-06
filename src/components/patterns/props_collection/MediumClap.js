@@ -8,6 +8,7 @@ import useDOMRef from './custom_hooks/useDOMRef';
 import useClapState from './custom_hooks/useClapState';
 import useEffectAfterMount from './custom_hooks/useEffectAfterMount';
 
+// Props Collection
 const Usage = () => {
   const {clapState, updateClapState, toggleProps, counterProps} = useClapState();
   const [DOMRef, setRef] = useDOMRef();
